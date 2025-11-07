@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         // Change these to match your Jenkins setup
-        SONARQUBE_SERVER = 'https://sonarcloud.io'           // Name configured in Jenkins -> Manage Jenkins -> SonarQube servers
+        SONARQUBE_SERVER = 'SonarQubeServer'           // Name configured in Jenkins -> Manage Jenkins -> SonarQube servers
         SONAR_AUTH_TOKEN  = credentials('sonarqube-token')  // Jenkins credential ID for SonarQube token
     }
 
