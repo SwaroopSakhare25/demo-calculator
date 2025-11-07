@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3.9.6'
+    }
+
     environment {
         // Change these to match your Jenkins setup
         SONARQUBE_SERVER = 'https://sonarcloud.io'           // Name configured in Jenkins -> Manage Jenkins -> SonarQube servers
