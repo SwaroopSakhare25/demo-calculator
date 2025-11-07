@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    environment {
+        // Change these to match your Jenkins setup
+        SONARQUBE_SERVER = 'https://sonarcloud.io'           // Name configured in Jenkins -> Manage Jenkins -> SonarQube servers
+        SONAR_AUTH_TOKEN  = credentials('sonarqube-token')  // Jenkins credential ID for SonarQube token
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo '🔹 Checking out source code...'
+                checkout scm
+            }
+        }
+
+        stage('Build WAR') {
+            steps {
+                echo '🔹 Building the WAR file with Maven...'
+                sh 'mvn clean package -DskipTests=false'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                echo '🔹 Running SonarQube analysis...'
+                withSonarQubeEnv("${SONARQUBE_SERVER}") {
+                    sh '''
+                        mvn sonar:sonar \
+                          -Dsonar.projectKey=calculator-webapp \
+                          -Dsonar.projectName="Calculator WebApp" \
+                          -Dsonar.host.url=$SONAR_HOST_URL \
+                          -Dsonar.login=$SONAR_AUTH_TOKEN
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Build and SonarQube analysis completed successfully!'
+        }
+        failure {
+            echo '❌ Build or SonarQube analysis failed!'
+        }
+    }
+}
