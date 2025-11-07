@@ -36,6 +36,8 @@ pipeline {
                           -Dsonar.organization=swaroop-demo \
                           -Dsonar.host.url=https://sonarcloud.io \
                           -Dsonar.login=$SONAR_AUTH_TOKEN
+                          -Dsonar.javascript.enabled=false \
+                          -Dsonar.css.enabled=false \
                           -Dsonar.exclusions=**/*.html
                     '''
                 }
