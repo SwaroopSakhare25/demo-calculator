@@ -2,13 +2,13 @@ pipeline {
     agent any
 
     tools {
-        maven 'mvn'
+        maven 'mvn'   // Name from Manage Jenkins → Global Tool Configuration
     }
 
     environment {
-        // Change these to match your Jenkins setup
-        SONARQUBE_SERVER = 'SonarQubeServer'           // Name configured in Jenkins -> Manage Jenkins -> SonarQube servers
-        SONAR_AUTH_TOKEN  = credentials('sonarqube-token-1')  // Jenkins credential ID for SonarQube token
+        // Match these to your Jenkins setup
+        SONARQUBE_SERVER = 'SonarQubeServer'             // Name configured under Manage Jenkins → System → SonarQube servers
+        SONAR_AUTH_TOKEN  = credentials('sonarqube-token-1')  // ID of your SonarCloud token in Jenkins Credentials
     }
 
     stages {
@@ -28,31 +28,37 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                echo '🔹 Running SonarQube analysis...'
+                echo '🔹 Running SonarCloud analysis...'
                 withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                    sh """
-                        mvn sonar:sonar 
-                          -Dsonar.html.file.suffixes=- 
-                          -Dsonar.organization=swaroop-demo                     
-                          -Dsonar.projectKey=calculator-webapp 
-                          -Dsonar.organization=swaroop-demo 
-                          -Dsonar.host.url=https://sonarcloud.io 
-                          -Dsonar.login=$SONAR_AUTH_TOKEN 
-                          -Dsonar.javascript.enabled=false 
-                          -Dsonar.css.enabled=false 
-                          -Dsonar.exclusions=**/*.html
-                    """
+                    sh '''
+                        mvn sonar:sonar
+                          -Dsonar.projectKey=calculator-webapp
+                          -Dsonar.organization=swaroop-demo
+                          -Dsonar.host.url=https://sonarcloud.io
+                          -Dsonar.login=$SONAR_AUTH_TOKEN
+                          -Dsonar.html.file.suffixes=-
+                          -Dsonar.javascript.enabled=false
+                          -Dsonar.css.enabled=false
+                          -Dsonar.exclusions="**/*.html"
+                    '''
                 }
+            }
+        }
+
+        stage('Verify Sonar Upload') {
+            steps {
+                echo '🔹 Verifying if report-task.txt was created...'
+                sh 'ls -l target/sonar || echo "Sonar report-task.txt not found (check Sonar logs)."'
             }
         }
     }
 
     post {
         success {
-            echo '✅ Build and SonarQube analysis completed successfully!'
+            echo '✅ Build and SonarCloud analysis completed successfully!'
         }
         failure {
-            echo '❌ Build or SonarQube analysis failed!'
+            echo '❌ Build or SonarCloud analysis failed!'
         }
     }
 }
