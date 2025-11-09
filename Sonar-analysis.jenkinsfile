@@ -30,14 +30,8 @@ pipeline {
             steps {
                 echo '🔹 Running SonarCloud analysis...'
                 withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                    sh '''
-                        mvn sonar:sonar
-                          -Dsonar.login=$SONAR_AUTH_TOKEN
-                          -Dsonar.html.file.suffixes=-
-                          -Dsonar.javascript.enabled=false
-                          -Dsonar.css.enabled=false
-                          -Dsonar.exclusions="**/*.html"
-                    '''
+                    // ✅ FIXED: single-line safe command + disable JS/CSS/HTML analysis
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=calculator-webapp -Dsonar.organization=swaroop-demo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.html.file.suffixes=- -Dsonar.javascript.enabled=false -Dsonar.css.enabled=false -Dsonar.exclusions="**/*.html"'
                 }
             }
         }
@@ -45,7 +39,7 @@ pipeline {
         stage('Verify Sonar Upload') {
             steps {
                 echo '🔹 Verifying if report-task.txt was created...'
-                sh 'ls -l target/sonar || echo "Sonar report-task.txt not found (check Sonar logs)."'
+                sh 'ls -l target/sonar || echo "⚠️  Sonar report-task.txt not found (check Sonar logs or organization key)."'
             }
         }
     }
