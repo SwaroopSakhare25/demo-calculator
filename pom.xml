@@ -18,7 +18,7 @@
     <sonar.projectKey>calculator-webapp</sonar.projectKey>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
-  </properties>
+
 
   <dependencies>
     <!-- Servlet API -->
