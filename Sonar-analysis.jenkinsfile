@@ -32,9 +32,6 @@ pipeline {
                 withSonarQubeEnv("${SONARQUBE_SERVER}") {
                     sh '''
                         mvn sonar:sonar
-                          -Dsonar.projectKey=calculator-webapp
-                          -Dsonar.organization=swaroop-demo
-                          -Dsonar.host.url=https://sonarcloud.io
                           -Dsonar.login=$SONAR_AUTH_TOKEN
                           -Dsonar.html.file.suffixes=-
                           -Dsonar.javascript.enabled=false

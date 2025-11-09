@@ -10,9 +10,14 @@
   <packaging>war</packaging>
   <name>Calculator WebApp</name>
 
+
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    <sonar.organization>swaroop-demo</sonar.organization>
+    <sonar.projectKey>calculator-webapp</sonar.projectKey>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+  </properties>
   </properties>
 
   <dependencies>
