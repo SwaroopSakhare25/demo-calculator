@@ -30,7 +30,7 @@ pipeline {
             steps {
                 echo '🔹 Running SonarQube analysis...'
                 withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                    sh '''
+                    sh """
                         mvn sonar:sonar \
                           -Dsonar.html.file.suffixes=- \  
                           -Dsonar.organization=swaroop-demo \                          
@@ -41,7 +41,7 @@ pipeline {
                           -Dsonar.javascript.enabled=false \
                           -Dsonar.css.enabled=false \
                           -Dsonar.exclusions=**/*.html
-                    '''
+                    """
                 }
             }
         }
