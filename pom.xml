@@ -17,6 +17,10 @@
     <sonar.organization>swaroop-demo</sonar.organization>
     <sonar.projectKey>calculator-webapp</sonar.projectKey>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <sonar.javascript.enabled>false</sonar.javascript.enabled>
+    <sonar.css.enabled>false</sonar.css.enabled>
+    <sonar.html.file.suffixes>-</sonar.html.file.suffixes>
+    <sonar.exclusions>**/*.html</sonar.exclusions>
   </properties>
 
 
