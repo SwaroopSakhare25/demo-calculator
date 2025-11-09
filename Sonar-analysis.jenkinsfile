@@ -33,6 +33,7 @@ pipeline {
                     sh '''
                         mvn sonar:sonar \
                           -Dsonar.html.file.suffixes=-  # disables HTML analysis
+                          -Dsonar.organization=swaroop-demo \                          
                           -Dsonar.projectKey=calculator-webapp \
                           -Dsonar.organization=swaroop-demo \
                           -Dsonar.host.url=https://sonarcloud.io \
