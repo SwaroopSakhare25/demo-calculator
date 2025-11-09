@@ -32,7 +32,7 @@ pipeline {
                 withSonarQubeEnv("${SONARQUBE_SERVER}") {
                     sh '''
                         mvn sonar:sonar \
-                          -Dsonar.html.file.suffixes=-  # disables HTML analysis
+                          -Dsonar.html.file.suffixes=- \  
                           -Dsonar.organization=swaroop-demo \                          
                           -Dsonar.projectKey=calculator-webapp \
                           -Dsonar.organization=swaroop-demo \
