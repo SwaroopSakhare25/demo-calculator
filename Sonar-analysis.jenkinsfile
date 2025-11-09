@@ -31,15 +31,15 @@ pipeline {
                 echo '🔹 Running SonarQube analysis...'
                 withSonarQubeEnv("${SONARQUBE_SERVER}") {
                     sh """
-                        mvn sonar:sonar \
-                          -Dsonar.html.file.suffixes=- \  
-                          -Dsonar.organization=swaroop-demo \                          
-                          -Dsonar.projectKey=calculator-webapp \
-                          -Dsonar.organization=swaroop-demo \
-                          -Dsonar.host.url=https://sonarcloud.io \
-                          -Dsonar.login=$SONAR_AUTH_TOKEN \
-                          -Dsonar.javascript.enabled=false \
-                          -Dsonar.css.enabled=false \
+                        mvn sonar:sonar 
+                          -Dsonar.html.file.suffixes=- 
+                          -Dsonar.organization=swaroop-demo                     
+                          -Dsonar.projectKey=calculator-webapp 
+                          -Dsonar.organization=swaroop-demo 
+                          -Dsonar.host.url=https://sonarcloud.io 
+                          -Dsonar.login=$SONAR_AUTH_TOKEN 
+                          -Dsonar.javascript.enabled=false 
+                          -Dsonar.css.enabled=false 
                           -Dsonar.exclusions=**/*.html
                     """
                 }
